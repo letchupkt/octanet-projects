@@ -1,114 +1,126 @@
-# Importing necessary library for time simulation
+# Import the time module for simulating delays
 import time 
 
-# Initializing account data
-balance = 1000  # Initial balance in the account
-pin = "1234"  # Default PIN for the account
-transaction_history = []  # List to store all transaction records (withdrawals and deposits)
 
-def display_menu():
-    
-    #Displays the available ATM menu options to the user.
-    
+
+
+
+
+
+# Initialize account details
+balance = 1000  # Account balance
+pin = "1234"  # Default PIN
+transaction_history = []  # List to store transactions
+
+
+
+
+
+# Function to display ATM menu
+def show_menu():
     print("\nATM Menu:")
-    print("1. Account Balance Inquiry")  # Option for checking account balance
-    print("2. Cash Withdrawal")          # Option for withdrawing cash
-    print("3. Cash Deposit")             # Option for depositing cash
-    print("4. Change PIN")               # Option for changing the account PIN
-    print("5. Transaction History")      # Option to view past transactions
-    print("6. Exit")                     # Option to exit the ATM simulation
+    print("1. Check Account Balance")
+    print("2. Withdraw Cash")
+    print("3. Deposit Cash")
+    print("4. Change PIN")
+    print("5. View Transaction History")
+    print("6. Exit")
 
-def check_pin():
 
-    print("Insert Your Card")  
-    time.sleep(5)  # Simulate card insertion time of 5 seconds
+
+
+# Function to verify the entered PIN
+def verify_pin():
+    print("Please insert your card...")
+    time.sleep(3)  # Simulate card insertion delay
     
-    # Ask the user to enter their PIN for authentication
     entered_pin = input("Enter your PIN: ")
-    
-    # If the entered PIN is incorrect, print an error and return False
     if entered_pin != pin:
-        print("Incorrect PIN. Try again.")
+        print("Incorrect PIN.")
         return False
-    return True  # If the PIN is correct, return True to allow access
+    return True
 
-def account_balance_inquiry():
-    
-    #Displays the current balance of the user's account.
-    
-    print(f"Your account balance is: ${balance}")
 
-def cash_withdrawal():
-    
-    # Ask the user to enter the withdrawal amount
+
+
+# Function to check account balance
+def check_balance():
+    print(f"Your current balance is: ${balance}")
+
+
+
+
+
+# Function to withdraw cash
+def withdraw_cash():
     amount = float(input("Enter the amount you wish to withdraw: $"))
     
-    global balance  # Use the global balance variable to update it
-    
-    # Check if the user has enough balance for the withdrawal
+    global balance
     if amount <= balance:
-        balance -= amount  # Deduct the amount from the balance
-        transaction_history.append(f"Withdrew: ${amount}")  # Add the transaction to the history
-        print(f"Withdrawal successful. Your new balance is: ${balance}")
+        balance -= amount
+        transaction_history.append(f"Withdrew: ${amount}")
+        print(f"Withdrawal successful! Your new balance is: ${balance}")
     else:
-        print("Insufficient balance.")  # If balance is insufficient, show an error message
+        print("Insufficient funds.")
 
-def cash_deposit():
-    
-    # Ask the user to enter the deposit amount
+
+
+
+# Function to deposit cash
+def deposit_cash():
     amount = float(input("Enter the amount you wish to deposit: $"))
     
-    global balance  # Use the global balance variable to update it
-    
-    balance += amount  # Add the deposit amount to the balance
-    transaction_history.append(f"Deposited: ${amount}")  # Add the transaction to the history
-    print(f"Deposit successful. Your new balance is: ${balance}")
+    global balance
+    balance += amount
+    transaction_history.append(f"Deposited: ${amount}")
+    print(f"Deposit successful! Your new balance is: ${balance}")
 
-def change_pin():
-    
-    # Ask the user to input a new PIN
+
+
+
+# Function to change the account PIN
+def update_pin():
     new_pin = input("Enter your new PIN: ")
-    
-    global pin  # Use the global pin variable to update it
-    pin = new_pin  # Update the account PIN with the new PIN
-    print("PIN changed successfully.")  # Notify the user that the PIN has been updated
+    global pin
+    pin = new_pin
+    print("Your PIN has been updated.")
 
-def transaction_history_inquiry():
-    
+
+
+# Function to view transaction history
+def show_transaction_history():
     if transaction_history:
         print("\nTransaction History:")
         for transaction in transaction_history:
-            print(transaction)  # Print each transaction in the history
+            print(transaction)
     else:
-        print("No transactions yet.")  # If no transactions, inform the user
+        print("No transactions yet.")
 
-def run_atm():
-    
+
+# Main function to run the ATM program
+def start_atm():
     while True:
-        # Ask for the PIN before showing the menu options
-        if check_pin():
-            # If the PIN is correct, display the ATM menu
-            display_menu()
+        if verify_pin():  # Ask for PIN before showing menu
+            show_menu()  # Display menu options
             choice = input("Choose an option (1-6): ")
 
-            # Execute the corresponding function based on the user's choice
             if choice == '1':
-                account_balance_inquiry()  # Option 1: Check balance
+                check_balance()
             elif choice == '2':
-                cash_withdrawal()  # Option 2: Withdraw cash
+                withdraw_cash()
             elif choice == '3':
-                cash_deposit()  # Option 3: Deposit cash
+                deposit_cash()
             elif choice == '4':
-                change_pin()  # Option 4: Change PIN
+                update_pin()
             elif choice == '5':
-                transaction_history_inquiry()  # Option 5: View transaction history
+                show_transaction_history()
             elif choice == '6':
-                print("Thank you for using the ATM. Goodbye!")  # Exit option
-                break  # Exit the ATM simulation
+                print("Thank you for using the ATM. Goodbye!")
+                break
             else:
-                print("Invalid option. Please choose a valid option (1-6).")  # Invalid option error
+                print("Invalid option.")
         else:
-            continue  # Retry PIN if the entered PIN is incorrect
+            continue  # Retry PIN if incorrect
 
-# Running the ATM simulation
-run_atm()
+# Start the ATM simulation
+start_atm()
