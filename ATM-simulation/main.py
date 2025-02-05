@@ -18,13 +18,13 @@ transaction_history = []  # List to store transactions
 
 # Function to display ATM menu
 def show_menu():
-    print("\nATM Menu:")
-    print("1. Check Account Balance")
-    print("2. Withdraw Cash")
-    print("3. Deposit Cash")
-    print("4. Change PIN")
-    print("5. View Transaction History")
-    print("6. Exit")
+    print("\n   ATM Menu:")
+    print("         1. Check Account Balance")
+    print("         2. Withdraw Cash")
+    print("         3. Deposit Cash")
+    print("         4. Change PIN")
+    print("         5. View Transaction History")
+    print("         6. Exit")
 
 
 
@@ -32,13 +32,18 @@ def show_menu():
 # Function to verify the entered PIN
 def verify_pin():
     print("Please insert your card...")
-    time.sleep(3)  # Simulate card insertion delay
+    time.sleep(3)  
     
-    entered_pin = input("Enter your PIN: ")
-    if entered_pin != pin:
-        print("Incorrect PIN.")
-        return False
-    return True
+    for i in range(3):
+        entered_pin = input("Enter your PIN: ")
+        if entered_pin != pin:
+            print("Incorrect PIN.")
+        else:
+            print("PIN verified.")
+            return True
+    
+    print("Too many incorrect attempts. Your card is blocked.")
+    return False
 
 
 
@@ -68,7 +73,7 @@ def withdraw_cash():
 
 # Function to deposit cash
 def deposit_cash():
-    amount = float(input("Enter the amount you wish to deposit: $"))
+    amount = float(input("Enter the amount you wish to deposit : ₹"))
     
     global balance
     balance += amount
@@ -80,7 +85,7 @@ def deposit_cash():
 
 # Function to change the account PIN
 def update_pin():
-    new_pin = input("Enter your new PIN: ")
+    new_pin = input("Enter your new PIN : ")
     global pin
     pin = new_pin
     print("Your PIN has been updated.")
@@ -90,7 +95,7 @@ def update_pin():
 # Function to view transaction history
 def show_transaction_history():
     if transaction_history:
-        print("\nTransaction History:")
+        print("\nTransaction History :")
         for transaction in transaction_history:
             print(transaction)
     else:
@@ -102,7 +107,7 @@ def start_atm():
     while True:
         if verify_pin():  # Ask for PIN before showing menu
             show_menu()  # Display menu options
-            choice = input("Choose an option (1-6): ")
+            choice = input("Choose an option (1-6) : ")
 
             if choice == '1':
                 check_balance()
@@ -123,4 +128,7 @@ def start_atm():
             continue  # Retry PIN if incorrect
 
 # Start the ATM simulation
+
+
+print("<=============ATM SIMULATION=============>")
 start_atm()
